@@ -132,7 +132,6 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
         return result
 
     def post_process(self, row: dict, context: Optional[dict] = None) -> Optional[dict]:
-        print(row)
         row["type"] = self.content_type
         return row
 
