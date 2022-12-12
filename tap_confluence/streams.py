@@ -203,8 +203,8 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
                     th.Property("accountId", th.StringType),
                     th.Property("email", th.StringType),
                     th.Property("publicName", th.StringType),
-                )
-            )
+                ))
+            ))
         )),
         th.Property("when", th.DateTimeType),
         th.Property("friendlyWhen", th.StringType),
