@@ -87,6 +87,12 @@ class SpacesStream(TapConfluenceStream):
     name = "spaces"
     path = "/space"
     primary_keys = ["id"]
+    expand = [
+        "permissions",
+        "icon",
+        "description.plain",
+        "description.view",
+    ]
     schema = th.PropertiesList(
         th.Property("id", th.IntegerType),
         th.Property("key", th.StringType),
@@ -154,6 +160,9 @@ class ThemesStream(TapConfluenceStream):
     name = "themes"
     path = "/settings/theme"
     primary_keys = ["themeKey"]
+    expand = [
+        "icon",
+    ]
     schema = th.PropertiesList(
         th.Property("themeKey", th.StringType),
         th.Property("name", th.StringType),
@@ -170,6 +179,15 @@ class ThemesStream(TapConfluenceStream):
 class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
     path = "/content"
     primary_keys = ["id"]
+    expand = [
+        "history",
+        "history.lastUpdated",
+        "history.previousVersion",
+        "history.contributors",
+        "restrictions.read.restrictions.user",
+        "version",
+        "descendants.comment",
+    ]
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
         th.Property("title", th.StringType),
