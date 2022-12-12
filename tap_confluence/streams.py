@@ -97,18 +97,22 @@ class SpacesStream(TapConfluenceStream):
             th.ObjectType(
                 th.Property("subjects", th.ObjectType(
                     th.Property("user", th.ObjectType(
-                        th.Property("results", th.ArrayType(th.ObjectType(
-                            th.Property("accountId", th.StringType),
-                            th.Property("email", th.StringType),
-                            th.Property("type", th.StringType),
-                            th.Property("publicName", th.StringType),
-                        )))
+                        th.Property("results", th.ArrayType(
+                            th.ObjectType(
+                                th.Property("accountId", th.StringType),
+                                th.Property("email", th.StringType),
+                                th.Property("type", th.StringType),
+                                th.Property("publicName", th.StringType),
+                            )
+                        ))
                     )),
                     th.Property("group", th.ObjectType(
-                        th.Property("results", th.ArrayType(th.ObjectType(
-                            th.Property("id", th.StringType),
-                            th.Property("name", th.StringType),
-                            th.Property("type", th.StringType),
+                        th.Property("results", th.ArrayType(
+                            th.ObjectType(
+                                th.Property("id", th.StringType),
+                                th.Property("name", th.StringType),
+                                th.Property("type", th.StringType),
+                            )
                         ))
                     )),
                 )),
@@ -171,6 +175,7 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
         th.Property("title", th.StringType),
         th.Property("type", th.StringType),
         th.Property("status", th.StringType),
+    ).to_dict()
 #         th.Property("history", th.ObjectType(
 #             th.Property("latest", th.BooleanType),
 #             th.Property("createdBy", th.ObjectType(
@@ -268,7 +273,6 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
 #             th.Property("editui", th.StringType),
 #             th.Property("webui", th.StringType),
 #         )),
-    ).to_dict()
 
     @property
     @abc.abstractmethod
