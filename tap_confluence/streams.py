@@ -5,10 +5,10 @@ from base64 import b64encode
 from pathlib import Path
 from typing import Any, Dict, Iterable, List
 
+from singer_sdk import typing as th  # JSON Schema typing helpers
+
 import requests
 from singer_sdk.streams import RESTStream
-
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
 class TapConfluenceStream(RESTStream):
@@ -73,48 +73,204 @@ class GroupsStream(TapConfluenceStream):
     name = "groups"
     path = "/group"
     primary_keys = ["id"]
-    schema_filepath = SCHEMAS_DIR / "group.json"
+    schema = th.PropertiesList(
+        th.Property("id", th.StringType),
+        th.Property("name", th.StringType),
+        th.Property("type", th.StringType),
+        th.Property("_links", th.ObjectType(
+            th.Property("self", th.StringType)
+        ))
+    ).to_dict()
 
 
 class SpacesStream(TapConfluenceStream):
     name = "spaces"
     path = "/space"
     primary_keys = ["id"]
-    schema_filepath = SCHEMAS_DIR / "space.json"
-
-    expand = [
-        "permissions",
-        "icon",
-        "description.plain",
-        "description.view",
-    ]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("key", th.StringType),
+        th.Property("name", th.StringType),
+        th.Property("type", th.StringType),
+        th.Property("status", th.StringType),
+        th.Property("permissions", th.ArrayType(
+            th.ObjectType(
+                th.Property("subjects", th.ObjectType(
+                    th.Property("user", th.ObjectType(
+                        th.Property("results", th.ArrayType(th.ObjectType(
+                            th.Property("accountId", th.StringType),
+                            th.Property("email", th.StringType),
+                            th.Property("type", th.StringType),
+                            th.Property("publicName", th.StringType),
+                        )))
+                    )),
+                    th.Property("group", th.ObjectType(
+                        th.Property("results", th.ArrayType(th.ObjectType(
+                            th.Property("id", th.StringType),
+                            th.Property("name", th.StringType),
+                            th.Property("type", th.StringType),
+                        ))
+                    )),
+                )),
+                th.Property("anonymousAccess", th.BooleanType),
+                th.Property("unlicensedAccess", th.BooleanType),
+                th.Property("operation", th.ObjectType(
+                    th.Property("operation", th.StringType),
+                    th.Property("targetType", th.StringType),
+                )),
+            )
+        )),
+        th.Property("icon", th.ObjectType(
+            th.Property("path", th.StringType),
+            th.Property("width", th.IntegerType),
+            th.Property("height", th.IntegerType),
+            th.Property("isDefault", th.BooleanType),
+        )),
+        th.Property("description", th.ObjectType(
+            th.Property("plain", th.ObjectType(
+                th.Property("representation", th.StringType),
+                th.Property("value", th.StringType),
+            )),
+            th.Property("view", th.ObjectType(
+                th.Property("representation", th.StringType),
+                th.Property("value", th.StringType),
+            )),
+        )),
+        th.Property("_expandable", th.ObjectType(
+            th.Property("homepage", th.StringType),
+        )),
+        th.Property("_links", th.ObjectType(
+            th.Property("self", th.StringType),
+            th.Property("webui", th.StringType),
+        )),
+    ).to_dict()
 
 
 class ThemesStream(TapConfluenceStream):
     name = "themes"
     path = "/settings/theme"
     primary_keys = ["themeKey"]
-    schema_filepath = SCHEMAS_DIR / "theme.json"
+    schema = th.PropertiesList(
+        th.Property("themeKey", th.StringType),
+        th.Property("name", th.StringType),
+        th.Property("description", th.StringType),
+        th.Property("icon", th.ObjectType(
+            th.PropertyType("path", th.StringType),
+            th.PropertyType("width", th.IntegerType),
+            th.PropertyType("height", th.IntegerType),
+            th.PropertyType("isDefault", th.BooleanType),
+        )),
+    ).to_dict()
 
-    expand = [
-        "icon",
-    ]
-
-
+        
 class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
     path = "/content"
     primary_keys = ["id"]
-    schema_filepath = SCHEMAS_DIR / "content.json"
-
-    expand = [
-        "history",
-        "history.lastUpdated",
-        "history.previousVersion",
-        "history.contributors",
-        "restrictions.read.restrictions.user",
-        "version",
-        "descendants.comment",
-    ]
+    schema = th.PropertiesList(
+        th.Property("id", th.StringType),
+        th.Property("title", th.StringType),
+        th.Property("type", th.StringType),
+        th.Property("status", th.StringType),
+        th.Property("history", th.ObjectType(
+            th.Property("latest", th.BooleanType),
+            th.Property("createdBy", th.ObjectType(
+                th.PropertyType("type", th.StringType),
+                th.PropertyType("accountId", th.StringType),
+                th.PropertyType("email", th.StringType),
+                th.PropertyType("publicName", th.StringType),
+            )),
+            th.Property("createdDate", th.DateTimeType),
+            th.Property("contributors", th.ObjectType(
+                th.Property("publishers", th.ObjectType(
+                    th.Property("users", th.ArrayType(
+                        th.ObjectType(
+                            th.PropertyType("type", th.StringType),
+                            th.PropertyType("accountId", th.StringType),
+                            th.PropertyType("email", th.StringType),
+                            th.PropertyType("publicName", th.StringType),
+                        )
+                    )),
+                    th.Property("userKeys", th.ArrayType(th.StringType)),
+                )),
+            )),
+            th.Property("previousVersion", th.ObjectType(
+    th.Property("by", th.ObjectType(
+        th.PropertyType("type", th.StringType),
+        th.PropertyType("accountId", th.StringType),
+        th.PropertyType("email", th.StringType),
+        th.PropertyType("publicName", th.StringType),
+     )
+   ),
+    th.Property("when", th.DateTimeType),
+    th.Property("friendlyWhen", th.StringType),
+    th.Property("message", th.StringType),
+    th.Property("number", th.IntegerType),
+    th.Property("minorEdit", th.BooleanType),
+    th.Property("collaborators", th.ObjectType(
+                    th.Property("users", th.ArrayType(
+                        th.ObjectType(
+                            th.PropertyType("type", th.StringType),
+                            th.PropertyType("accountId", th.StringType),
+                            th.PropertyType("email", th.StringType),
+                            th.PropertyType("publicName", th.StringType),
+                        )
+                    )),
+                    th.Property("userKeys", th.ArrayType(th.StringType)),
+                )),
+)
+),
+        )),
+        th.Property("version", th.ObjectType(
+    th.Property("by", th.ObjectType(
+        th.PropertyType("type", th.StringType),
+        th.PropertyType("accountId", th.StringType),
+        th.PropertyType("email", th.StringType),
+        th.PropertyType("publicName", th.StringType),
+     )
+   ),
+    th.Property("when", th.DateTimeType),
+    th.Property("friendlyWhen", th.StringType),
+    th.Property("message", th.StringType),
+    th.Property("number", th.IntegerType),
+    th.Property("minorEdit", th.BooleanType),
+    th.Property("collaborators", th.ObjectType(
+                    th.Property("users", th.ArrayType(
+                        th.ObjectType(
+                            th.PropertyType("type", th.StringType),
+                            th.PropertyType("accountId", th.StringType),
+                            th.PropertyType("email", th.StringType),
+                            th.PropertyType("publicName", th.StringType),
+                        )
+                    )),
+                    th.Property("userKeys", th.ArrayType(th.StringType)),
+                )),
+)
+),
+    th.Property("descendants", th.ObjectType(
+        th.Property("results", th.ArrayType(
+            th.ObjectType(
+                th.Property("id", th.StringType),
+                th.Property("title", th.StringType),
+                th.Property("type", th.StringType),
+                th.Property("status", th.StringType),
+            )
+        ))
+    )),
+        th.Property("restrictions", th.ObjectType(
+            th.Property("operations", th.StringType),
+#             th.Property("restrictions", -- To Check
+        )),
+        th.Property("_expandable", th.ObjectType(
+            th.Property("container", th.StringType),
+            th.Property("space", th.StringType),
+        )),
+        th.Property("_links", th.ObjectType(
+            th.Property("self", th.StringType),
+            th.Property("tinyui", th.StringType),
+            th.Property("editui", th.StringType),
+            th.Property("webui", th.StringType),
+        )),
+    ).to_dict()
 
     @property
     @abc.abstractmethod
