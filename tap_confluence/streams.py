@@ -229,50 +229,48 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
                 th.Property("email", th.StringType),
                 th.Property("publicName", th.StringType),
             ))
-       )),
-       th.Property("when", th.DateTimeType),
-       th.Property("friendlyWhen", th.StringType),
-       th.Property("message", th.StringType),
-       th.Property("number", th.IntegerType),
-       th.Property("minorEdit", th.BooleanType),
+        )),
+        th.Property("when", th.DateTimeType),
+        th.Property("friendlyWhen", th.StringType),
+        th.Property("message", th.StringType),
+        th.Property("number", th.IntegerType),
+        th.Property("minorEdit", th.BooleanType),
+        th.Property("collaborators", th.ObjectType(
+            th.Property("users", th.ArrayType(
+                th.ObjectType(
+                    th.Property("type", th.StringType),
+                    th.Property("accountId", th.StringType),
+                    th.Property("email", th.StringType),
+                    th.Property("publicName", th.StringType),
+                )
+            )),
+            th.Property("userKeys", th.ArrayType(th.StringType)),
+        )),
+        th.Property("descendants", th.ObjectType(
+            th.Property("results", th.ArrayType(
+                th.ObjectType(
+                    th.Property("id", th.StringType),
+                    th.Property("title", th.StringType),
+                    th.Property("type", th.StringType),
+                    th.Property("status", th.StringType),
+                )
+            ))
+        )),
+        th.Property("restrictions", th.ObjectType(
+            th.Property("operations", th.StringType),
+#             th.Property("restrictions", -- To Check
+        )),
+        th.Property("_expandable", th.ObjectType(
+            th.Property("container", th.StringType),
+            th.Property("space", th.StringType),
+        )),
+        th.Property("_links", th.ObjectType(
+            th.Property("self", th.StringType),
+            th.Property("tinyui", th.StringType),
+            th.Property("editui", th.StringType),
+            th.Property("webui", th.StringType),
+        )),
     ).to_dict()
-#        th.Property("collaborators", th.ObjectType(
-#                     th.Property("users", th.ArrayType(
-#                         th.ObjectType(
-#                             th.Property("type", th.StringType),
-#                             th.Property("accountId", th.StringType),
-#                             th.Property("email", th.StringType),
-#                             th.Property("publicName", th.StringType),
-#                         )
-#                     )),
-#                     th.Property("userKeys", th.ArrayType(th.StringType)),
-#                 )),
-# )
-# ),
-#     th.Property("descendants", th.ObjectType(
-#         th.Property("results", th.ArrayType(
-#             th.ObjectType(
-#                 th.Property("id", th.StringType),
-#                 th.Property("title", th.StringType),
-#                 th.Property("type", th.StringType),
-#                 th.Property("status", th.StringType),
-#             )
-#         ))
-#     )),
-#         th.Property("restrictions", th.ObjectType(
-#             th.Property("operations", th.StringType),
-# #             th.Property("restrictions", -- To Check
-#         )),
-#         th.Property("_expandable", th.ObjectType(
-#             th.Property("container", th.StringType),
-#             th.Property("space", th.StringType),
-#         )),
-#         th.Property("_links", th.ObjectType(
-#             th.Property("self", th.StringType),
-#             th.Property("tinyui", th.StringType),
-#             th.Property("editui", th.StringType),
-#             th.Property("webui", th.StringType),
-#         )),
 
     @property
     @abc.abstractmethod
