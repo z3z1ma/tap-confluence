@@ -205,7 +205,7 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
                     th.Property("publicName", th.StringType),
                 )
             )
-        ),
+        )),
         th.Property("when", th.DateTimeType),
         th.Property("friendlyWhen", th.StringType),
         th.Property("message", th.StringType),
