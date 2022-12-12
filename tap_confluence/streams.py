@@ -159,10 +159,10 @@ class ThemesStream(TapConfluenceStream):
         th.Property("name", th.StringType),
         th.Property("description", th.StringType),
         th.Property("icon", th.ObjectType(
-            th.PropertyType("path", th.StringType),
-            th.PropertyType("width", th.IntegerType),
-            th.PropertyType("height", th.IntegerType),
-            th.PropertyType("isDefault", th.BooleanType),
+            th.Property("path", th.StringType),
+            th.Property("width", th.IntegerType),
+            th.Property("height", th.IntegerType),
+            th.Property("isDefault", th.BooleanType),
         )),
     ).to_dict()
 
@@ -179,20 +179,20 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
 #         th.Property("history", th.ObjectType(
 #             th.Property("latest", th.BooleanType),
 #             th.Property("createdBy", th.ObjectType(
-#                 th.PropertyType("type", th.StringType),
-#                 th.PropertyType("accountId", th.StringType),
-#                 th.PropertyType("email", th.StringType),
-#                 th.PropertyType("publicName", th.StringType),
+#                 th.Property("type", th.StringType),
+#                 th.Property("accountId", th.StringType),
+#                 th.Property("email", th.StringType),
+#                 th.Property("publicName", th.StringType),
 #             )),
 #             th.Property("createdDate", th.DateTimeType),
 #             th.Property("contributors", th.ObjectType(
 #                 th.Property("publishers", th.ObjectType(
 #                     th.Property("users", th.ArrayType(
 #                         th.ObjectType(
-#                             th.PropertyType("type", th.StringType),
-#                             th.PropertyType("accountId", th.StringType),
-#                             th.PropertyType("email", th.StringType),
-#                             th.PropertyType("publicName", th.StringType),
+#                             th.Property("type", th.StringType),
+#                             th.Property("accountId", th.StringType),
+#                             th.Property("email", th.StringType),
+#                             th.Property("publicName", th.StringType),
 #                         )
 #                     )),
 #                     th.Property("userKeys", th.ArrayType(th.StringType)),
@@ -200,10 +200,10 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
 #             )),
 #             th.Property("previousVersion", th.ObjectType(
 #                 th.Property("by", th.ObjectType(
-#                     th.PropertyType("type", th.StringType),
-#                     th.PropertyType("accountId", th.StringType),
-#                     th.PropertyType("email", th.StringType),
-#                     th.PropertyType("publicName", th.StringType),
+#                     th.Property("type", th.StringType),
+#                     th.Property("accountId", th.StringType),
+#                     th.Property("email", th.StringType),
+#                     th.Property("publicName", th.StringType),
 #                 )
 #             )
 #         ),
@@ -215,20 +215,20 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
 #         th.Property("collaborators", th.ObjectType(
 #             th.Property("users", th.ArrayType(
 #                 th.ObjectType(
-#                     th.PropertyType("type", th.StringType),
-#                     th.PropertyType("accountId", th.StringType),
-#                     th.PropertyType("email", th.StringType),
-#                     th.PropertyType("publicName", th.StringType),
+#                     th.Property("type", th.StringType),
+#                     th.Property("accountId", th.StringType),
+#                     th.Property("email", th.StringType),
+#                     th.Property("publicName", th.StringType),
 #                 )
 #             )),
 #             th.Property("userKeys", th.ArrayType(th.StringType)),
 #         )),
 #         th.Property("version", th.ObjectType(
 #             th.Property("by", th.ObjectType(
-#                 th.PropertyType("type", th.StringType),
-#                 th.PropertyType("accountId", th.StringType),
-#                 th.PropertyType("email", th.StringType),
-#                 th.PropertyType("publicName", th.StringType),
+#                 th.Property("type", th.StringType),
+#                 th.Property("accountId", th.StringType),
+#                 th.Property("email", th.StringType),
+#                 th.Property("publicName", th.StringType),
 #             )
 #        ),
 #        th.Property("when", th.DateTimeType),
@@ -239,10 +239,10 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
 #        th.Property("collaborators", th.ObjectType(
 #                     th.Property("users", th.ArrayType(
 #                         th.ObjectType(
-#                             th.PropertyType("type", th.StringType),
-#                             th.PropertyType("accountId", th.StringType),
-#                             th.PropertyType("email", th.StringType),
-#                             th.PropertyType("publicName", th.StringType),
+#                             th.Property("type", th.StringType),
+#                             th.Property("accountId", th.StringType),
+#                             th.Property("email", th.StringType),
+#                             th.Property("publicName", th.StringType),
 #                         )
 #                     )),
 #                     th.Property("userKeys", th.ArrayType(th.StringType)),
