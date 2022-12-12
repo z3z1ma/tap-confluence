@@ -175,43 +175,43 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
         th.Property("title", th.StringType),
         th.Property("type", th.StringType),
         th.Property("status", th.StringType),
+        th.Property("history", th.ObjectType(
+            th.Property("latest", th.BooleanType),
+            th.Property("createdBy", th.ObjectType(
+                th.Property("type", th.StringType),
+                th.Property("accountId", th.StringType),
+                th.Property("email", th.StringType),
+                th.Property("publicName", th.StringType),
+            )),
+            th.Property("createdDate", th.DateTimeType),
+            th.Property("contributors", th.ObjectType(
+                th.Property("publishers", th.ObjectType(
+                    th.Property("users", th.ArrayType(
+                        th.ObjectType(
+                            th.Property("type", th.StringType),
+                            th.Property("accountId", th.StringType),
+                            th.Property("email", th.StringType),
+                            th.Property("publicName", th.StringType),
+                        )
+                    )),
+                    th.Property("userKeys", th.ArrayType(th.StringType)),
+                )),
+            )),
+            th.Property("previousVersion", th.ObjectType(
+                th.Property("by", th.ObjectType(
+                    th.Property("type", th.StringType),
+                    th.Property("accountId", th.StringType),
+                    th.Property("email", th.StringType),
+                    th.Property("publicName", th.StringType),
+                )
+            )
+        ),
+        th.Property("when", th.DateTimeType),
+        th.Property("friendlyWhen", th.StringType),
+        th.Property("message", th.StringType),
+        th.Property("number", th.IntegerType),
+        th.Property("minorEdit", th.BooleanType),
     ).to_dict()
-#         th.Property("history", th.ObjectType(
-#             th.Property("latest", th.BooleanType),
-#             th.Property("createdBy", th.ObjectType(
-#                 th.Property("type", th.StringType),
-#                 th.Property("accountId", th.StringType),
-#                 th.Property("email", th.StringType),
-#                 th.Property("publicName", th.StringType),
-#             )),
-#             th.Property("createdDate", th.DateTimeType),
-#             th.Property("contributors", th.ObjectType(
-#                 th.Property("publishers", th.ObjectType(
-#                     th.Property("users", th.ArrayType(
-#                         th.ObjectType(
-#                             th.Property("type", th.StringType),
-#                             th.Property("accountId", th.StringType),
-#                             th.Property("email", th.StringType),
-#                             th.Property("publicName", th.StringType),
-#                         )
-#                     )),
-#                     th.Property("userKeys", th.ArrayType(th.StringType)),
-#                 )),
-#             )),
-#             th.Property("previousVersion", th.ObjectType(
-#                 th.Property("by", th.ObjectType(
-#                     th.Property("type", th.StringType),
-#                     th.Property("accountId", th.StringType),
-#                     th.Property("email", th.StringType),
-#                     th.Property("publicName", th.StringType),
-#                 )
-#             )
-#         ),
-#         th.Property("when", th.DateTimeType),
-#         th.Property("friendlyWhen", th.StringType),
-#         th.Property("message", th.StringType),
-#         th.Property("number", th.IntegerType),
-#         th.Property("minorEdit", th.BooleanType),
 #         th.Property("collaborators", th.ObjectType(
 #             th.Property("users", th.ArrayType(
 #                 th.ObjectType(
