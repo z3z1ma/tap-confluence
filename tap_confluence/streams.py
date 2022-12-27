@@ -191,6 +191,11 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
         th.Property("title", th.StringType),
+        th.Property("body", th.ObjectType(
+            th.Property("view", th.ObjectType(
+                th.Property("value", th.StringType)
+            ))
+        )),
         th.Property("type", th.StringType),
         th.Property("status", th.StringType),
         th.Property("history", th.ObjectType(
