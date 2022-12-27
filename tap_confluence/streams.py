@@ -187,6 +187,7 @@ class BaseContentStream(TapConfluenceStream, metaclass=abc.ABCMeta):
         "restrictions.read.restrictions.user",
         "version",
         "descendants.comment",
+        "body.view",
     ]
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
